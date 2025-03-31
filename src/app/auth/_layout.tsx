@@ -1,7 +1,9 @@
 import { useTheme } from "@/src/components/context/Theme";
 import Colors from "@/src/constants/Colors";
 import { Sizes } from "@/src/constants/Sizes";
-import { Stack } from "expo-router";
+import AntDesign from "@expo/vector-icons/AntDesign";
+import { router, Stack } from "expo-router";
+import { TouchableOpacity } from "react-native";
 
 const Layout = () => {
   const { dark } = useTheme();
@@ -27,7 +29,21 @@ const Layout = () => {
           },
         }}
       />
-    
+      <Stack.Screen
+        name="account-setup"
+        options={{
+          title: "",
+          headerShadowVisible: false,
+          contentStyle: {
+            backgroundColor: Colors.light.white,
+          },
+          headerLeft: () => (
+            <TouchableOpacity onPress={() => router.back()}>
+              <AntDesign name="arrowleft" size={Sizes.icon.medium} />
+            </TouchableOpacity>
+          ),
+        }}
+      />
     </Stack>
   );
 };

@@ -19,19 +19,11 @@ import AntDesign from "@expo/vector-icons/AntDesign";
 import { Fonts } from "../../constants/Fonts";
 import { Google } from "../../constants/Images";
 import { Link, router } from "expo-router";
-import { signInWithGoogle } from "../../services/auth";
-// import {
-//   Trigger,
-//   Content,
-//   Item,
-//   ItemIcon,
-//   Root,
-//   ItemTitle,
-// } from "zeego/dropdown-menu";
+import { useGoogleSignIn } from "@/src/hook/useAuth";
 
 const OnboardingScreen = () => {
   const { dark } = useTheme();
-
+  const { mutate } = useGoogleSignIn();
   const flatListRef = useRef<FlatList>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
   const scrollX = useRef(new Animated.Value(0)).current;
@@ -164,7 +156,7 @@ const OnboardingScreen = () => {
         }}
       >
         <TouchableOpacity
-          onPress={() => signInWithGoogle()}
+          onPress={() => mutate()}
           style={{
             borderWidth: 1,
             borderColor: Colors.dark.muted,
@@ -195,88 +187,40 @@ const OnboardingScreen = () => {
             Continue with google
           </Text>
         </TouchableOpacity>
-        {/* <Root>
-          <Trigger>
-            <TouchableOpacity
-              style={{
-                borderWidth: 1,
-                borderColor: Colors.dark.muted,
-                padding: Sizes.padding.medium,
-                borderRadius: Sizes.radius.xlarge,
-                marginHorizontal: Sizes.margin.medium,
-                flexDirection: "row",
-                alignItems: "center",
-                gap: Sizes.margin.small,
-                justifyContent: "center",
-              }}
-            >
-              <AntDesign
-                name="mail"
-                size={24}
-                color={dark ? Colors.dark.text : Colors.light.text}
-              />
-              <Text
-                style={{
-                  color: dark ? Colors.dark.text : Colors.light.text,
-                  fontSize: Sizes.font.medium,
-                  fontFamily: Fonts.Medium,
-                }}
-              >
-                Continue with Email
-              </Text>
-            </TouchableOpacity>
-          </Trigger>
-          <Content
+
+        <TouchableOpacity
+          onPress={() => {
+            router.push("/auth/sign-in");
+            router.setParams({ screen: "signin" });
+          }}
+          style={{
+            borderWidth: 1,
+            borderColor: Colors.dark.muted,
+            padding: Sizes.padding.medium,
+            borderRadius: Sizes.radius.xlarge,
+            marginHorizontal: Sizes.margin.medium,
+            flexDirection: "row",
+            alignItems: "center",
+            gap: Sizes.margin.small,
+            justifyContent: "center",
+          }}
+        >
+          <AntDesign
+            name="mail"
+            size={24}
+            color={dark ? Colors.dark.text : Colors.light.text}
+          />
+          <Text
             style={{
-              width: Sizes.width * 0.8,
+              color: dark ? Colors.dark.text : Colors.light.text,
+              fontSize: Sizes.font.medium,
+              fontFamily: Fonts.Medium,
             }}
           >
-            <Item
-              onSelect={() => {
-                router.push("/(auth)/sign-in");
-                router.setParams({ screen: "signin" });
-              }}
-              key="SignIn"
-            >
-              <ItemTitle
-                style={{
-                  fontFamily: Fonts.Medium,
-                }}
-              >
-                Login with Email
-              </ItemTitle>
-              <ItemIcon
-                ios={{
-                  name: "pencil",
-                  pointSize: 20,
-                  weight: "bold",
-                }}
-                // androidIconName="edit_text"
-              />
-            </Item>
-            <Item
-              onSelect={() => {
-                router.push("/(auth)/sign-in");
-                router.setParams({ screen: "signup" });
-              }}
-              key="SignUp"
-            >
-              <ItemIcon
-                ios={{
-                  name: "envelope",
-                  pointSize: 20,
-                }}
-              />
-              <ItemTitle
-                style={{
-                  fontFamily: Fonts.Medium,
-                }}
-              >
-                SignUp with Email
-              </ItemTitle>
-            </Item>
-          </Content>
-        </Root> */}
+            Continue with Email
+          </Text>
+        </TouchableOpacity>
+
         <Text
           style={{
             color: dark ? Colors.dark.text : Colors.light.text,

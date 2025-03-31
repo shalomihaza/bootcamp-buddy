@@ -29,3 +29,9 @@ export const authSchema = z
     message: "Password must contain at least one special character (!@#$.%^&*)",
     path: ["password"],
   });
+
+export const accountSetupSchema = z.object({
+  image: z.string().url(),
+  fullName: z.string().min(3, { message: "Fullname is required" }),
+  role: z.string(),
+});

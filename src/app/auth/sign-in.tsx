@@ -1,4 +1,5 @@
 import {
+  Pressable,
   StyleSheet,
   Text,
   TextInput,
@@ -10,18 +11,15 @@ import Colors from "@/src/constants/Colors";
 import { useTheme } from "@/src/components/context/Theme";
 import { Sizes } from "@/src/constants/Sizes";
 import { Fonts } from "@/src/constants/Fonts";
-// import PrimaryButton from "@/src/components/buttons/PrimaryButton";
-import {
-  signInWithEmailPassword,
-  signUpWithEmailPassword,
-} from "@/src/services/auth";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { authSchema } from "@/src/services/schema/auth";
 import { z } from "zod";
-import { router, useLocalSearchParams, usePathname } from "expo-router";
+import { Link, router, useLocalSearchParams, usePathname } from "expo-router";
 import { useMMKVString } from "react-native-mmkv";
+import PrimaryButton from "@/src/components/buttons/PrimaryButton";
+import { useSignIn, useSignUp } from "@/src/hook/useAuth";
 
 const SignIn = () => {
   const { dark } = useTheme();
@@ -31,6 +29,9 @@ const SignIn = () => {
   const { screen } = useLocalSearchParams<{ screen: string }>();
   const [loading, setLoading] = useState(false);
   const [token, setToken] = useMMKVString("token");
+
+  const { mutate: mutateSignIn, isPending: isPendingSignIn } = useSignIn();
+  const { mutate: mutateSignUp, isPending: isPendingSignUp } = useSignUp();
 
   const {
     control,
@@ -47,28 +48,14 @@ const SignIn = () => {
   const onSubmit = async (values: z.infer<typeof authSchema>) => {
     setLoading(true);
     screen === "signin"
-      ? await signInWithEmailPassword({
+      ? mutateSignIn({
           email: values.email,
           password: values.password,
         })
-          .then((result) => {
-            setToken(result);
-            console.log("RESULT",result)
-            return router.replace("/");
-          })
-          .finally(() => {
-            setLoading(false);
-          })
-      : await signUpWithEmailPassword({
+      : mutateSignUp({
           email: values.email,
           password: values.password,
-        })
-          .then(() => {
-            return router.setParams({ screen: "signin" });
-          })
-          .finally(() => {
-            setLoading(false);
-          });
+        });
   };
 
   return (
@@ -151,7 +138,7 @@ const SignIn = () => {
                 }}
                 placeholder="Your personal email or work email"
                 placeholderTextColor={
-                  dark ? Colors.dark.text : Colors.light.text
+                  dark ? Colors.dark.darkGrey : Colors.light.darkGrey
                 }
               />
             )}
@@ -215,7 +202,7 @@ const SignIn = () => {
                   secureTextEntry={secure}
                   placeholder="Your password"
                   placeholderTextColor={
-                    dark ? Colors.dark.text : Colors.light.text
+                    dark ? Colors.dark.darkGrey : Colors.light.darkGrey
                   }
                 />
                 <TouchableOpacity
@@ -243,16 +230,93 @@ const SignIn = () => {
             {errors.password?.message}
           </Text>
         </View>
-        {/* <PrimaryButton
-          loading={loading}
+        <PrimaryButton
+          loading={isPendingSignIn || isPendingSignUp}
           disabled={isSubmitting}
           onPress={handleSubmit(onSubmit)}
-          // onPress={() => signInWithEmailPassword()}
           title={screen === "signin" ? "Sign In" : "Sign Up"}
           style={{
             marginTop: Sizes.margin.large,
           }}
-        /> */}
+        />
+      </View>
+
+      <View>
+        {screen === "signup" ? (
+          <View
+            style={{
+              gap: Sizes.margin.small,
+              flexDirection: "row",
+              marginTop: Sizes.margin.medium,
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <Text
+              style={{
+                fontSize: Sizes.font.small,
+                fontFamily: Fonts.Light,
+              }}
+            >
+              Already have an account
+            </Text>
+            <Pressable
+              onPress={() => {
+                router.back();
+                router.push("/auth/sign-in");
+                router.setParams({ screen: "signin" });
+              }}
+            >
+              <Text
+                style={{
+                  textDecorationStyle: "solid",
+                  textDecorationLine: "underline",
+                  color: Colors.light.primary,
+                  fontFamily: Fonts.Medium,
+                }}
+              >
+                Sign In
+              </Text>
+            </Pressable>
+          </View>
+        ) : (
+          <View
+            style={{
+              gap: Sizes.margin.small,
+              flexDirection: "row",
+              marginTop: Sizes.margin.medium,
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <Text
+              style={{
+                fontSize: Sizes.font.small,
+                fontFamily: Fonts.Light,
+              }}
+            >
+              Don't have an account
+            </Text>
+            <Pressable
+              onPress={() => {
+                router.back();
+                router.push("/auth/sign-in");
+                router.setParams({ screen: "signup" });
+              }}
+            >
+              <Text
+                style={{
+                  textDecorationStyle: "solid",
+                  textDecorationLine: "underline",
+                  color: Colors.light.primary,
+                  fontFamily: Fonts.Medium,
+                }}
+              >
+                Create account
+              </Text>
+            </Pressable>
+          </View>
+        )}
       </View>
     </View>
   );
