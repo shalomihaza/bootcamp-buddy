@@ -10,11 +10,23 @@ This is an [Expo](https://expo.dev) project created with [`create-expo-app`](htt
    npm install
    ```
 
-2. Start the app
+2. Prebuild Project
 
    ```bash
-    npx expo start
+   npx expo prebuild 
    ```
+
+3. Install Native Deps
+   ```
+   npx expo run:ios
+   npx expo run:android
+   ```
+
+4. Start Project
+   ```
+   npx expo start
+   ```
+
 
 In the output, you'll find options to open the app in a
 
