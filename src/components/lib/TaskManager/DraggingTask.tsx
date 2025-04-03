@@ -9,7 +9,7 @@ export function DraggingTask({ id }: { id: BSON.ObjectID }) {
   return (
     <View style={styles.container}>
       <Text style={styles.text}>
-        {task.position}: {task.description}
+        {task?.position}: {task?.description}
       </Text>
     </View>
   );

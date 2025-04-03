@@ -7,13 +7,12 @@ import Animated, {
   SharedValue,
   runOnJS,
   useAnimatedStyle,
-  useDerivedValue,
   useSharedValue,
 } from "react-native-reanimated";
 import { PropsWithChildren, createContext, useContext, useState } from "react";
 
 type DraggingContext = {
-  draggingTaskId: BSON.ObjectID;
+  draggingTaskId: BSON.ObjectID | null;
   setDraggingTask: (id: BSON.ObjectID, y: number) => void;
   dragY?: SharedValue<number>;
   dragOffsetY?: SharedValue<number>;
@@ -30,7 +29,9 @@ export const TaskDragArea = ({
 }: PropsWithChildren<{
   updateItemPosition: (id: BSON.ObjectID, y: number) => void;
 }>) => {
-  const [draggingTaskId, setDraggingTaskId] = useState<BSON.ObjectID>(null);
+  const [draggingTaskId, setDraggingTaskId] = useState<BSON.ObjectID | null>(
+    null
+  );
   const { width } = useWindowDimensions();
 
   const dragX = useSharedValue(0);

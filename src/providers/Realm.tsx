@@ -3,7 +3,7 @@ import { RealmProvider, AppProvider, UserProvider } from "@realm/react";
 import { Task } from "../models/Task";
 import { AnonymousLogin } from "@/src/components/lib/TaskManager";
 
-const appId = "trello-mjcyr";
+const appId = "";
 
 export default function RealmCustomProvider({ children }: PropsWithChildren) {
   return (
@@ -11,18 +11,18 @@ export default function RealmCustomProvider({ children }: PropsWithChildren) {
       <UserProvider fallback={AnonymousLogin}>
         <RealmProvider
           schema={[Task]}
-          sync={{
-            flexible: true,
-            onError: (_session, error) => {
-              console.log(error);
-            },
-            initialSubscriptions: {
-              update(subs, realm) {
-                subs.add(realm.objects("Task"));
-              },
-              rerunOnOpen: true,
-            },
-          }}
+          //   sync={{
+          //     flexible: true,
+          //     onError: (_session, error) => {
+          //       console.log(error);
+          //     },
+          //     initialSubscriptions: {
+          //       update(subs, realm) {
+          //         subs.add(realm.objects("Task"));
+          //       },
+          //       rerunOnOpen: true,
+          //     },
+          //   }}
         >
           {children}
         </RealmProvider>
