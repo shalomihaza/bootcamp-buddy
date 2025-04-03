@@ -5,13 +5,8 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 import { ThemeProvider, useTheme } from "../components/context/Theme";
 import { GoogleSignin } from "@react-native-google-signin/google-signin";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
-import { auth } from "../services/firebase";
 import AuthStorage from "../services/AuthStorage";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-
-console.log("WebClientID:", process.env.EXPO_PUBLIC_WEB_CLIENT_ID);
-console.log("iOSClientID:", process.env.EXPO_PUBLIC_IOS_CLIENT_ID);
-
 
 GoogleSignin.configure({
   webClientId: process.env.EXPO_PUBLIC_WEB_CLIENT_ID,
@@ -41,11 +36,9 @@ const App = () => {
 
 function RootLayout() {
   const rootNavigation = useRootNavigation();
-
   useEffect(() => {
     if (rootNavigation?.isReady()) {
       const user = authStorage.getUser();
-      console.log(user);
       if (!user) {
         router.push("/auth");
       }
@@ -53,14 +46,19 @@ function RootLayout() {
   }, [rootNavigation, authStorage]);
 
   return (
-    <Stack>
-      <Stack.Screen name="(main)/(tabs)" options={{ headerShown: false }} />
+    <Stack
+      screenOptions={{
+        headerShown: false,
+      }}
+    >
+      <Stack.Screen name="(main)/(tabs)" />
       <Stack.Screen
+        name="(main)/posts/create-post"
         options={{
-          headerShown: false,
+          presentation: "modal",
         }}
-        name="auth"
       />
+      <Stack.Screen name="auth" />
     </Stack>
   );
 }

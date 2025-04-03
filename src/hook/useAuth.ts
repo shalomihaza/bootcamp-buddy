@@ -40,8 +40,7 @@ export const useGoogleSignIn = () => {
   const authService = AuthService.getInstance();
   const mutate = useMutation<GoogleResponse | null, Error>({
     mutationFn: async () => await authService.signInWithGoogle(),
-    onSuccess: (data) => {
-      if (!data?.isNew) return;
+    onSuccess: (data:any) => {
       if (data.isNew) {
         router.replace("/auth/account-setup");
       } else {

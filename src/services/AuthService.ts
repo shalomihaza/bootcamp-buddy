@@ -38,16 +38,13 @@ class AuthService {
     body: AuthType
   ): Promise<UserCredential> => {
     try {
-      console.log("Entering")
       const result = await createUserWithEmailAndPassword(
         auth,
         body.email,
         body.password
       );
-      console.log("Entering...")
       const { email, uid } = result.user;
       this.userService.createUser({ id: uid, email: email! });
-      console.log("Enterered")
       this.authStorage.setUser(result.user);
       return result;
     } catch (error: any) {
@@ -93,6 +90,7 @@ class AuthService {
       if (!isSuccessResponse(response)) {
         return null;
       }
+
       const { accessToken, idToken } = await GoogleSignin.getTokens();
       const credential = GoogleAuthProvider.credential(idToken, accessToken);
       const user = await signInWithCredential(auth, credential);
