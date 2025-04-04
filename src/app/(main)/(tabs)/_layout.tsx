@@ -24,8 +24,8 @@ const Layout = () => {
       <Tabs.Screen
         name="index"
         options={{
-          tabBarLabel: "Feeds",
-          headerTitle: "Feeds",
+          tabBarLabel: "Forum",
+          headerTitle: "Forum",
           headerTitleStyle: {
             fontFamily: Fonts.SemiBold,
             fontSize: Sizes.font.large,
