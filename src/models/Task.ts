@@ -18,7 +18,7 @@ export class Task extends Realm.Object<Task> {
       _id: "objectId",
       description: "string",
       isComplete: { type: "bool", default: false },
-      createdAt: { type: "date", default: () => new Date() },
+      createdAt: "date",
       position: "int",
       user_id: "string",
     },

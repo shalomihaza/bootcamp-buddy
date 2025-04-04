@@ -4,7 +4,6 @@ import { useObject, useRealm } from "@realm/react";
 import { Task } from "@/src/models/Task";
 import { BSON } from "realm";
 import { useState } from "react";
-import { LinearGradient } from "expo-linear-gradient";
 
 const TaskDetails = () => {
   const { taskId } = useLocalSearchParams();

@@ -86,11 +86,7 @@ export const TaskDragArea = ({
       }}
     >
       <GestureDetector gesture={pan}>
-        <View
-          style={{
-            ...StyleSheet.absoluteFill,
-          }}
-        >
+        <View style={StyleSheet.absoluteFill}>
           {children}
 
           <Animated.View

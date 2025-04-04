@@ -33,12 +33,12 @@ export function TaskBoard() {
 
   return (
     <TaskDragArea updateItemPosition={updateItemPosition}>
-      <View style={{ padding: 10, flex: 1 }}>
-        <LinearGradient
+      <View style={{ padding: 0, flex: 1 }}>
+        {/* <LinearGradient
           // Background Linear Gradient
           colors={["#560591", "#2A1OBE"]}
           style={StyleSheet.absoluteFill}
-        />
+        /> */}
 
         <TaskList />
       </View>
