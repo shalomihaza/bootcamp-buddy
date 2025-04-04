@@ -23,16 +23,10 @@ class AuthService {
   private static instance: AuthService;
 
   constructor() {
-    this.authStorage = AuthStorage.getInstance();
-    this.userService = UserService.getInstance();
+    this.authStorage = new AuthStorage();
+    this.userService = new UserService();
   }
 
-  public static getInstance() {
-    if (!AuthService.instance) {
-      AuthService.instance = new AuthService();
-    }
-    return AuthService.instance;
-  }
 
   public signUpWithEmailPassword = async (
     body: AuthType

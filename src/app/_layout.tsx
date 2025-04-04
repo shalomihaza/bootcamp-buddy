@@ -19,7 +19,6 @@ GoogleSignin.configure({
   iosClientId: process.env.EXPO_PUBLIC_IOS_CLIENT_ID,
 });
 
-const authStorage = AuthStorage.getInstance();
 
 const client = new QueryClient();
 
@@ -38,6 +37,7 @@ const App = () => {
 };
 
 function RootLayout() {
+  const authStorage = new AuthStorage();
   const rootNavigation = useRootNavigation();
   useEffect(() => {
     if (rootNavigation?.isReady()) {
@@ -47,7 +47,7 @@ function RootLayout() {
       }
     }
   }, [rootNavigation, authStorage]);
-
+  
   return (
     <Stack>
       <Stack.Screen
@@ -55,7 +55,7 @@ function RootLayout() {
         options={{
           headerShown: false,
         }}
-      />
+        />
       <Stack.Screen
         name="(main)/posts/create-post"
         options={{

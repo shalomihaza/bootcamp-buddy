@@ -5,7 +5,7 @@ import { toast } from "sonner-native";
 import { router } from "expo-router";
 
 export const useSignUp = () => {
-  const authService = AuthService.getInstance();
+  const authService = new AuthService();
   const mutate = useMutation<unknown, Error, AuthType>({
     mutationFn: async (body: AuthType) =>
       await authService.signUpWithEmailPassword(body),
@@ -21,7 +21,7 @@ export const useSignUp = () => {
 };
 
 export const useSignIn = () => {
-  const authService = AuthService.getInstance();
+  const authService = new AuthService();
   const mutate = useMutation<unknown, Error, AuthType>({
     mutationFn: async (body: AuthType) =>
       await authService.signInWithEmailPassword(body),
@@ -37,7 +37,7 @@ export const useSignIn = () => {
 };
 
 export const useGoogleSignIn = () => {
-  const authService = AuthService.getInstance();
+  const authService = new AuthService();
   const mutate = useMutation<GoogleResponse | null, Error>({
     mutationFn: async () => await authService.signInWithGoogle(),
     onSuccess: (data:any) => {
