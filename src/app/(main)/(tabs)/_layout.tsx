@@ -11,7 +11,7 @@ const Layout = () => {
     <Tabs
       screenOptions={{
         tabBarStyle: {
-          height: Platform.OS === "ios" ? 55 : 60,
+          height: Platform.OS === "ios" ? 70 : 60,
         },
         tabBarActiveTintColor: Colors.light.secondary,
         tabBarInactiveTintColor: Colors.light.muted,
@@ -46,6 +46,10 @@ const Layout = () => {
         options={{
           tabBarLabel: "Task",
           headerShown: false,
+          headerTitleStyle: {
+            fontFamily: Fonts.Medium,
+            fontSize: Sizes.font.large,
+          },
           tabBarIcon: ({ color, focused }) => (
             <View>
               <MaterialIcons

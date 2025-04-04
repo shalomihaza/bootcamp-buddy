@@ -11,12 +11,6 @@ class AuthStorage {
     this.storage = new MMKV();
   }
 
-  public static getInstance(): AuthStorage {
-    if (!AuthStorage.instance) {
-      AuthStorage.instance = new AuthStorage();
-    }
-    return AuthStorage.instance;
-  }
 
   public getUser(): User | null {
     const user = this.storage.getString("user");

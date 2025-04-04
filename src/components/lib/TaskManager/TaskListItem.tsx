@@ -12,6 +12,7 @@ import Animated, {
   withTiming,
 } from "react-native-reanimated";
 import { useEffect } from "react";
+import Colors from "@/src/constants/Colors";
 
 export const ItemHeight = 60;
 
@@ -90,7 +91,7 @@ const styles = StyleSheet.create({
     paddingVertical: 3,
   },
   container: {
-    backgroundColor: "#1D2125",
+    backgroundColor: Colors.light.grey,
     padding: 15,
     borderRadius: 5,
     flexDirection: "row",
@@ -99,7 +100,7 @@ const styles = StyleSheet.create({
     height: "100%",
   },
   text: {
-    color: "white",
+    color: Colors.light.black,
     fontSize: 16,
   },
 });

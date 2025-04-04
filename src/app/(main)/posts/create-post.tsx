@@ -303,7 +303,9 @@ const styles = StyleSheet.create({
   },
   publishButton: {
     backgroundColor: Colors.light.primary,
-    paddingHorizontal: 16,
+    width: 80,
+    alignItems: "center",
+    justifyContent: "center",
     paddingVertical: 8,
     borderRadius: 20,
   },
