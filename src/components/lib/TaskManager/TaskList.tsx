@@ -15,14 +15,16 @@ import { useDraggingContext } from "./TaskDragArea";
 import AuthStorage from "@/src/services/AuthStorage";
 import { Log } from "@/src/utils/Logger";
 import { BSON } from "realm";
+import Colors from "@/src/constants/Colors";
+import { Sizes } from "@/src/constants/Sizes";
+
+const authStorage = new AuthStorage();
 
 export function TaskList() {
   const realm = useRealm();
   const tasks = useQuery(Task).sorted("position");
-  // const user = useUser();
-  const user = AuthStorage.getInstance().getUser();
+  const user = authStorage.getUser();
 
-  Log.dev("user", user);
 
   const maxPosition = (useQuery(Task).max("position") as number) || 0;
 
@@ -47,7 +49,7 @@ export function TaskList() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Todo</Text>
+      {/* <Text style={styles.title}>Todo</Text> */}
 
       {/* The list of tasks */}
       <FlatList
@@ -80,10 +82,8 @@ export function TaskList() {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#101112",
-    padding: 10,
-    borderRadius: 5,
-    gap: 5,
+    backgroundColor: Colors.light.white,
+    paddingHorizontal:Sizes.padding.medium,
     flex: 1,
   },
   title: {
@@ -93,9 +93,10 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   input: {
-    color: "white",
+    color: Colors.light.black,
+    fontSize: 16,
     padding: 15,
-    backgroundColor: "#1D2125",
+    backgroundColor: Colors.light.grey,
     borderRadius: 5,
   },
 });

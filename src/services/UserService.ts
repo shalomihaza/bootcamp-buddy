@@ -25,14 +25,6 @@ class UserService {
     this.db = getFirestore(app);
   }
 
-  public static getInstance() {
-    if (!UserService.instance) {
-      UserService.instance = new UserService();
-    }
-
-    return UserService.instance;
-  }
-
   public async getUser(): Promise<User> {
     try {
       const userRef = collection(this.db, "users");
@@ -45,7 +37,7 @@ class UserService {
         id: doc.id,
         ...doc.data(),
       }))[0] as User;
-
+      console.log("User data: ", user);
       return user;
     } catch (error) {
       throw error;
@@ -73,12 +65,11 @@ class UserService {
       const userDocRef = doc(this.db, "users", user.id);
       await setDoc(userDocRef, user);
       return user.id!;
-
     } catch (error) {
       console.error("Error creating user in Firestore:", error);
       throw error;
     }
-}
+  }
 
   async updateUser(userId: string, user: Partial<User>): Promise<boolean> {
     try {

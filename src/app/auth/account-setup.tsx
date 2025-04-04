@@ -24,8 +24,8 @@ import { z } from "zod";
 import { auth } from "@/src/services/firebase";
 import UserService from "@/src/services/UserService";
 
-const userService = UserService.getInstance();
 const AccountSetUp = () => {
+
   const { dark } = useTheme();
   const { bottom } = useSafeAreaInsets();
   const [emailFocused, setEmailFocused] = useState(false);
@@ -361,9 +361,11 @@ const AccountSetUp = () => {
           </View>
         </View>
       </View>
-      <View style={{
-        marginBottom:Sizes.margin.medium
-      }}>
+      <View
+        style={{
+          marginBottom: Sizes.margin.medium,
+        }}
+      >
         <PrimaryButton
           loading={isPending}
           onPress={handleSubmit(onSubmit)}
