@@ -361,7 +361,9 @@ const AccountSetUp = () => {
           </View>
         </View>
       </View>
-      <View>
+      <View style={{
+        marginBottom:Sizes.margin.medium
+      }}>
         <PrimaryButton
           loading={isPending}
           onPress={handleSubmit(onSubmit)}
