@@ -68,7 +68,7 @@ export function TaskListItem({ task, index }: { task: Task; index: number }) {
 
   return (
     <Animated.View style={[styles.root, { marginTop: marginTop }]}>
-      <Link href={`/${task._id}`} asChild>
+      <Link href={`/task/${task._id}`} asChild>
         <Pressable
           style={styles.container}
           onLongPress={() => setDraggingTask(task._id, index * ItemHeight + 73)}

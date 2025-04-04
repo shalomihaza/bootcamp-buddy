@@ -12,11 +12,17 @@ import { useRealm, useQuery, useUser } from "@realm/react";
 import { Task } from "@/src/models/Task";
 
 import { useDraggingContext } from "./TaskDragArea";
+import AuthStorage from "@/src/services/AuthStorage";
+import { Log } from "@/src/utils/Logger";
+import { BSON } from "realm";
 
 export function TaskList() {
   const realm = useRealm();
   const tasks = useQuery(Task).sorted("position");
-  const user = useUser();
+  // const user = useUser();
+  const user = AuthStorage.getInstance().getUser();
+
+  Log.dev("user", user);
 
   const maxPosition = (useQuery(Task).max("position") as number) || 0;
 
@@ -27,8 +33,11 @@ export function TaskList() {
   const createTask = () => {
     realm.write(() => {
       realm.create(Task, {
+        _id: new BSON.ObjectId(),
         description: newTask,
-        user_id: user.id,
+        createdAt: new Date(),
+        isComplete: false,
+        user_id: user?.uid ?? "",
         position: maxPosition + 1,
       });
     });

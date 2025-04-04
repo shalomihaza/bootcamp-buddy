@@ -4,9 +4,7 @@ import { TaskBoard } from "@/src/components/lib/TaskManager";
 
 const Tasks = () => {
   return (
-    <View style={{ flex: 1, padding: 10 }}>
-      <Text>Tasks</Text>
-
+    <View style={{ flex: 1 }}>
       <TaskBoard />
     </View>
   );

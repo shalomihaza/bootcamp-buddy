@@ -8,7 +8,7 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { auth } from "../services/firebase";
 import AuthStorage from "../services/AuthStorage";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import Realm from "../providers/Realm";
+import RealmCustomProvider from "../providers/Realm";
 
 console.log("WebClientID:", process.env.EXPO_PUBLIC_WEB_CLIENT_ID);
 console.log("iOSClientID:", process.env.EXPO_PUBLIC_IOS_CLIENT_ID);
@@ -29,13 +29,13 @@ const App = () => {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <ThemeProvider>
-        <Realm>
+        <RealmCustomProvider>
           <SafeAreaProvider>
             <QueryClientProvider client={client}>
               <RootLayout />
             </QueryClientProvider>
           </SafeAreaProvider>
-        </Realm>
+        </RealmCustomProvider>
       </ThemeProvider>
     </GestureHandlerRootView>
   );

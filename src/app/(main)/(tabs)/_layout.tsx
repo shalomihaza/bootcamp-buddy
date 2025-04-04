@@ -6,7 +6,7 @@ const Layout = () => {
   return (
     <Tabs>
       <Tabs.Screen name="index" />
-      <Tabs.Screen name="task" />
+      <Tabs.Screen name="task" options={{ headerShown: false }} />
       <Tabs.Screen name="account" />
     </Tabs>
   );

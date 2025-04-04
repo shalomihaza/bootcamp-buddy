@@ -29,8 +29,14 @@ const TaskDetails = () => {
   }
 
   return (
-    <View style={{ padding: 10 }}>
-      <Stack.Screen options={{ title: "Task Details" }} />
+    <View>
+      <Stack.Screen
+        options={{
+          title: "Task Details",
+
+          headerBackTitle: "Back",
+        }}
+      />
 
       <TextInput
         value={updatedDescription}
