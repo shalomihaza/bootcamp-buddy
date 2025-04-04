@@ -36,7 +36,7 @@ export function TaskBoard() {
       <View style={{ padding: 10, flex: 1 }}>
         <LinearGradient
           // Background Linear Gradient
-          colors={["#8711c1", "#2472fc"]}
+          colors={["#560591", "#2A1OBE"]}
           style={StyleSheet.absoluteFill}
         />
 
