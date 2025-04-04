@@ -32,7 +32,7 @@ export const SafeAreaComp: React.FC<SafeAreaCompProps> = ({
       // Paddings to handle safe area
 
       paddingTop: insets.top,
-      paddingBottom: insets.bottom,
+      // paddingBottom: insets.bottom,
       // paddingLeft: insets.left,
       // paddingRight: insets.right,
     },
