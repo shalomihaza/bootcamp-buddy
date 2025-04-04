@@ -45,11 +45,7 @@ const Layout = () => {
         name="task"
         options={{
           tabBarLabel: "Task",
-          headerTitle: "Task",
-          headerTitleStyle: {
-            fontFamily: Fonts.SemiBold,
-            fontSize: Sizes.font.large,
-          },
+          headerShown: false,
           tabBarIcon: ({ color, focused }) => (
             <View>
               <MaterialIcons

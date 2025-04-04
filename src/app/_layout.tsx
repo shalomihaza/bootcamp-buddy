@@ -10,6 +10,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { TouchableOpacity } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import { Fonts } from "../constants/Fonts";
+import RealmCustomProvider from "../providers/Realm";
 
 GoogleSignin.configure({
   webClientId: process.env.EXPO_PUBLIC_WEB_CLIENT_ID,
@@ -27,11 +28,13 @@ const App = () => {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <ThemeProvider>
-        <SafeAreaProvider>
-          <QueryClientProvider client={client}>
-            <RootLayout />
-          </QueryClientProvider>
-        </SafeAreaProvider>
+        <RealmCustomProvider>
+          <SafeAreaProvider>
+            <QueryClientProvider client={client}>
+              <RootLayout />
+            </QueryClientProvider>
+          </SafeAreaProvider>
+        </RealmCustomProvider>
       </ThemeProvider>
     </GestureHandlerRootView>
   );
