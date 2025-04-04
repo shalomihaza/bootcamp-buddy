@@ -7,6 +7,9 @@ import { GoogleSignin } from "@react-native-google-signin/google-signin";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import AuthStorage from "../services/AuthStorage";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { TouchableOpacity } from "react-native";
+import { AntDesign } from "@expo/vector-icons";
+import { Fonts } from "../constants/Fonts";
 
 GoogleSignin.configure({
   webClientId: process.env.EXPO_PUBLIC_WEB_CLIENT_ID,
@@ -46,19 +49,41 @@ function RootLayout() {
   }, [rootNavigation, authStorage]);
 
   return (
-    <Stack
-      screenOptions={{
-        headerShown: false,
-      }}
-    >
-      <Stack.Screen name="(main)/(tabs)" />
+    <Stack>
+      <Stack.Screen
+        name="(main)/(tabs)"
+        options={{
+          headerShown: false,
+        }}
+      />
       <Stack.Screen
         name="(main)/posts/create-post"
         options={{
+          headerShown: false,
           presentation: "modal",
         }}
       />
-      <Stack.Screen name="auth" />
+      <Stack.Screen
+        name="(main)/posts/[postId]"
+        options={{
+          headerTitle: "Post Detail",
+          headerTitleStyle: {
+            fontFamily: Fonts.Medium,
+          },
+          headerTitleAlign: "center",
+          headerLeft: () => (
+            <TouchableOpacity onPress={() => router.back()}>
+              <AntDesign name="arrowleft" size={24} />
+            </TouchableOpacity>
+          ),
+        }}
+      />
+      <Stack.Screen
+        name="auth"
+        options={{
+          headerShown: false,
+        }}
+      />
     </Stack>
   );
 }

@@ -12,6 +12,7 @@ import {
   Platform,
   KeyboardAvoidingView,
   Image,
+  ActivityIndicator,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
@@ -27,8 +28,6 @@ import { CreatePostType } from "@/src/types/Post";
 
 const CreatePost = () => {
   const [title, setTitle] = useState("");
-  const [tags, setTags] = useState<string[]>([]);
-  const [currentTag, setCurrentTag] = useState("");
   const [editorHeight, setEditorHeight] = useState(300);
   const { mutate, isPending } = useCreatePost();
 
@@ -43,18 +42,7 @@ const CreatePost = () => {
   const [isList, setIsList] = useState(false);
   const [htmlContent, setHtmlContent] = useState("");
 
-  const { pickImage, image: coverImage } = useImage();
-
-  const addTag = () => {
-    if (currentTag.trim() && !tags.includes(currentTag.trim())) {
-      setTags([...tags, currentTag.trim()]);
-      setCurrentTag("");
-    }
-  };
-
-  const removeTag = (tagToRemove: string) => {
-    setTags(tags.filter((tag) => tag !== tagToRemove));
-  };
+  const { pickImage, image: coverImage, loading } = useImage();
 
   const handleEditorCommand = (command: any) => {
     if (webViewRef.current) {
@@ -98,6 +86,7 @@ const CreatePost = () => {
   const handleMessage = (event: any) => {
     try {
       const data = JSON.parse(event.nativeEvent.data);
+      console.log("Received message from WebView:", data);
       if (data.type === "content") {
         setHtmlContent(data.content);
         setEditorHeight(data.height);
@@ -113,14 +102,13 @@ const CreatePost = () => {
       title,
       content: htmlContent,
       coverImage,
-      tags,
       commentCount: 0,
+      voteCount: 0,
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
       userId: authStorage.getUser()?.uid,
     } as CreatePostType;
 
-    console.log(JSON.stringify(postData, null, 2));
 
     mutate(postData, {
       onSuccess: () => {
@@ -137,6 +125,7 @@ const CreatePost = () => {
       !htmlContent.includes("placeholder")
     );
   };
+
 
   return (
     <SafeAreaView style={styles.container}>
@@ -161,7 +150,11 @@ const CreatePost = () => {
             disabled={!hasValidContent()}
             onPress={publishPost}
           >
-            <Text style={styles.publishButtonText}>Publish</Text>
+            {isPending ? (
+              <ActivityIndicator size="small" color={Colors.light.white} />
+            ) : (
+              <Text style={styles.publishButtonText}>Post</Text>
+            )}
           </TouchableOpacity>
         </View>
 
@@ -173,11 +166,17 @@ const CreatePost = () => {
           >
             {coverImage ? (
               <Image source={{ uri: coverImage }} style={styles.coverImage} />
-            ) : (
+            ) : loading ? (
               <View style={styles.coverImagePlaceholder}>
-                <Ionicons name="image-outline" size={32} color="#999" />
-                <Text style={styles.coverImageText}>Add a cover image</Text>
+                <ActivityIndicator size="small" color={Colors.light.primary} />
               </View>
+            ) : (
+              <>
+                <View style={styles.coverImagePlaceholder}>
+                  <Ionicons name="image-outline" size={32} color="#999" />
+                  <Text style={styles.coverImageText}>Add a cover image</Text>
+                </View>
+              </>
             )}
           </TouchableOpacity>
 
@@ -187,6 +186,7 @@ const CreatePost = () => {
             placeholder="Title"
             placeholderTextColor="#999"
             value={title}
+            selectionColor={Colors.light.primary}
             onChangeText={setTitle}
             multiline
             maxLength={100}
@@ -195,6 +195,7 @@ const CreatePost = () => {
           {/* Rich Text Editor */}
           <View style={[styles.editorContainer, { height: editorHeight }]}>
             <WebView
+              key={"default"}
               ref={webViewRef}
               originWhitelist={["*"]}
               source={{ html: editorHTML }}
@@ -204,34 +205,6 @@ const CreatePost = () => {
               keyboardDisplayRequiresUserAction={false}
               containerStyle={styles.webViewContainer}
             />
-          </View>
-
-          {/* Tags Section */}
-          <View style={styles.tagsSection}>
-            <Text style={styles.sectionTitle}>Tags</Text>
-            <View style={styles.tagsContainer}>
-              {tags.map((tag, index) => (
-                <View key={index} style={styles.tag}>
-                  <Text style={styles.tagText}>{tag}</Text>
-                  <TouchableOpacity onPress={() => removeTag(tag)}>
-                    <Ionicons name="close-circle" size={16} color="#666" />
-                  </TouchableOpacity>
-                </View>
-              ))}
-            </View>
-            <View style={styles.tagInput}>
-              <TextInput
-                style={styles.tagTextInput}
-                placeholder="Add a tag..."
-                placeholderTextColor="#999"
-                value={currentTag}
-                onChangeText={setCurrentTag}
-                onSubmitEditing={addTag}
-              />
-              <TouchableOpacity onPress={addTag}>
-                <Ionicons name="add-circle-outline" size={24} color="#666" />
-              </TouchableOpacity>
-            </View>
           </View>
         </ScrollView>
 

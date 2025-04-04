@@ -10,6 +10,7 @@ import {
 import FloatingAction from "@/src/components/FloatingAction";
 import { useGetPosts } from "@/src/hook/usePost";
 import PostCard from "@/src/components/PostCard";
+import PostLoader from "@/src/components/PostLoader";
 
 const Page = () => {
   const { data, refetch, isFetching } = useGetPosts();
@@ -24,6 +25,7 @@ const Page = () => {
         refreshControl={
           <RefreshControl refreshing={isFetching} onRefresh={() => refetch()} />
         }
+        ListEmptyComponent={() => isFetching && <PostLoader />}
         contentContainerStyle={styles.listContainer}
         ItemSeparatorComponent={() => <View style={styles.separator} />}
       />

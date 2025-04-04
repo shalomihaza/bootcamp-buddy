@@ -10,9 +10,9 @@ const FloatingAction = () => {
     onPress={()=>router.push("/(main)/posts/create-post")}
       activeOpacity={0.6}
       style={{
-        height: 50,
-        width: 50,
-        borderRadius: 25,
+        height: 55,
+        width: 55,
+        borderRadius: 28,
         backgroundColor: Colors.light.primary,
         justifyContent:"center",
         alignItems:"center",

@@ -1,5 +1,6 @@
 import {
   Image,
+  Pressable,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -14,6 +15,10 @@ import { getPreviewHTML } from "../constants/Html";
 import { Ionicons } from "@expo/vector-icons";
 import { formatNumber } from "../utils";
 import { useDownVote, useUpVote } from "../hook/usePost";
+import { formatDistanceToNow } from "date-fns";
+import { Fonts } from "../constants/Fonts";
+import Colors from "../constants/Colors";
+import { router } from "expo-router";
 
 const PostCard = ({ item }: { item: Post }) => {
   const windowDimensions = useWindowDimensions();
@@ -22,17 +27,26 @@ const PostCard = ({ item }: { item: Post }) => {
   const { mutate: downVoteMutate } = useDownVote();
 
   return (
-    <View style={styles.postCard}>
+    <Pressable
+      onPress={() => router.push(`/(main)/posts/${item.id}`)}
+      style={styles.postCard}
+    >
       {/* Vote Column */}
 
       {/* Content Column */}
       <View style={styles.contentColumn}>
         {/* Post Header */}
         <View style={styles.postHeader}>
-          <Text style={styles.subreddit}>r/blog</Text>
-          <Text style={styles.postDetails}>
-            • Posted by u/{item.user?.fullName} •
-            {/* {formatDistanceToNow(new Date(item.createdAt!))} */}
+          <Text style={styles.subreddit}>r/blog </Text>
+          <Text
+            style={{
+              fontFamily: Fonts.Regular,
+              fontSize: Sizes.font.small,
+              color: Colors.light.darkGrey,
+            }}
+          >
+            • Posted by u/{item.user?.fullName} •{" "}
+            {formatDistanceToNow(new Date(item.createdAt!))}
           </Text>
         </View>
 
@@ -51,17 +65,16 @@ const PostCard = ({ item }: { item: Post }) => {
         {/* Rich Text Content */}
         <View
           style={{
-            height: "auto",
+            minHeight: item.content.length <= 100 ? 20 : 80,
+            maxHeight: item.content.length > 400 ? 200 : 80,
           }}
         >
           <WebView
             originWhitelist={["*"]}
             source={{ html: getPreviewHTML(item.content) }}
-            // scrollEnabled={isExpanded}
-            style={[
-              styles.richTextWebView,
-              { width: windowDimensions.width }, // Account for vote column and padding
-            ]}
+            scrollEnabled={true}
+            style={[styles.richTextWebView]}
+            onError={(error) => console.log("WebView error:", error)}
           />
         </View>
 
@@ -85,7 +98,7 @@ const PostCard = ({ item }: { item: Post }) => {
           </TouchableOpacity>
         </View>
       </View>
-    </View>
+    </Pressable>
   );
 };
 
@@ -122,18 +135,18 @@ const styles = StyleSheet.create({
   },
   subreddit: {
     fontSize: 12,
-    fontWeight: "700",
+    fontFamily: Fonts.Bold,
     color: "#1c1c1c",
   },
   postDetails: {
-    fontSize: 12,
-    color: "#787C7E",
+    fontFamily: Fonts.Regular,
+    fontSize: Sizes.font.medium,
   },
   postTitle: {
-    fontSize: 16,
-    fontWeight: "500",
+    fontSize: Sizes.font.large,
+    fontFamily: Fonts.Medium,
     marginBottom: 8,
-    color: "#222222",
+    color: Colors.light.text,
   },
   postImage: {
     width: "100%",

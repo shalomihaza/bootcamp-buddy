@@ -18,8 +18,8 @@ export type CreatePostType = {
   id: string;
   title: string;
   content: string;
+  voteCount: number;
   coverImage: string;
-  tags: string[];
   createdAt?: string;
   updatedAt?: string;
   userId: string;
