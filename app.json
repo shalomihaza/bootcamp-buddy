@@ -9,9 +9,11 @@
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.bootcamp"
     },
     "android": {
+      "package": "com.bootcamp",
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
@@ -31,6 +33,32 @@
           "imageWidth": 200,
           "resizeMode": "contain",
           "backgroundColor": "#ffffff"
+        }
+      ],
+      [
+        "expo-font",
+        {
+          "fonts": [
+            "./assets/fonts/Sora-Bold.ttf",
+            "./assets/fonts/Sora-Regular.ttf",
+            "./assets/fonts/Sora-SemiBold.ttf",
+            "./assets/fonts/Sora-Light.ttf",
+            "./assets/fonts/Sora-Medium.ttf",
+            "./assets/fonts/Sora-ExtraBold.ttf",
+            "./assets/fonts/Sora-ExtraLight.ttf"
+          ]
+        }
+      ],
+      [
+        "@react-native-google-signin/google-signin",
+        {
+          "iosUrlScheme": "com.googleusercontent.apps.658889853634-b5m3j8djri4fkac9ivik7hbatiqv92c7"
+        }
+      ],
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "The app accesses your photos to let you share them with your friends."
         }
       ]
     ],
