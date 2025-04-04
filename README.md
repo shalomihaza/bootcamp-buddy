@@ -2,6 +2,14 @@
 
 ## Get started
 
+1. Clone Repository
+   ```bash
+     git clone https://github.com/shalomihaza/bootcamp-buddy.git
+
+      cd bootcamp-buddy
+    ```
+   
+
 1. Install dependencies
 
    ```bash
