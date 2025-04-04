@@ -24,8 +24,8 @@ const Layout = () => {
       <Tabs.Screen
         name="index"
         options={{
-          tabBarLabel: "Feeds",
-          headerTitle: "Feeds",
+          tabBarLabel: "Forum",
+          headerTitle: "Forum",
           headerTitleStyle: {
             fontFamily: Fonts.SemiBold,
             fontSize: Sizes.font.large,
@@ -45,11 +45,7 @@ const Layout = () => {
         name="task"
         options={{
           tabBarLabel: "Task",
-          headerTitle: "Task",
-          headerTitleStyle: {
-            fontFamily: Fonts.SemiBold,
-            fontSize: Sizes.font.large,
-          },
+          headerShown: false,
           tabBarIcon: ({ color, focused }) => (
             <View>
               <MaterialIcons

@@ -3,8 +3,8 @@ import { Onboarding1, Onboarding2, Onboarding3 } from "./Images";
 export const Onboarding = [
   {
     id: 1,
-    title: "Welcome to Todder",
-    description: "Your personal task manager",
+    title: "Welcome to Bootcamp Buddy",
+    description: "Your personalized learning companion",
     image: Onboarding1,
   },
   {
@@ -16,7 +16,7 @@ export const Onboarding = [
   {
     id: 3,
     title: "Stay productive",
-    description: "Track your progress and stay motivated",
+    description: "Collaborate and stay on track with your goals",
     image: Onboarding3,
   },
 ];
